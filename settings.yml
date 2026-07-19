@@ -21,3 +21,86 @@ brand_wordmark:
   type: bool
   default: true
   description: "Render the site title in the Cinzel display font (brand wordmark). Topic titles always stay in Inter for readability."
+
+# ---- Hero header logo (large on the homepage top, shrinks on scroll) ----
+
+hero_logo_enabled:
+  type: bool
+  default: true
+  description: "On the homepage, enlarge the header logo while the page is scrolled to the top; it shrinks back to the normal size as soon as the user scrolls. Desktop only."
+
+hero_logo_max_height:
+  type: integer
+  default: 68
+  min: 40
+  max: 160
+  description: "Height (px) of the enlarged header logo at the top of the homepage."
+
+# ---- Cookie consent + analytics (GA4) ----
+
+consent_enabled:
+  type: bool
+  default: true
+  description: "Show a cookie-consent banner. Analytics (GA4) load ONLY after the visitor accepts. A 'Cookie settings' link in the footer lets them change their choice later."
+
+ga4_measurement_id:
+  type: string
+  default: ""
+  description: "Google Analytics 4 measurement ID (e.g. G-XXXXXXXXXX). Loaded via gtag.js, but only after consent. Leave empty to disable analytics entirely. Keep Discourse's built-in GA setting empty so analytics are not loaded ungated."
+
+privacy_policy_url:
+  type: string
+  default: "/privacy"
+  description: "URL of the privacy policy, linked from the consent banner (relative like /privacy or an absolute URL)."
+
+# ---- Network switcher (the brand logo doubles as a hub switcher, like the hubs) ----
+
+network_switcher_enabled:
+  type: bool
+  default: true
+  description: "Replace the header logo with the Prontera brand switcher: emblem + wordmark + a dropdown to hop between the RO3 / ROZ hubs and this board, mirroring the hub headers."
+
+brand_subline:
+  type: string
+  default: "Community Board"
+  description: "Small uppercase subline under the wordmark in the header switcher."
+
+network_heading:
+  type: string
+  default: "Prontera Network"
+  description: "Heading shown at the top of the switcher dropdown."
+
+ro3_label:
+  type: string
+  default: "Ragnarok Online 3"
+  description: "RO3 row label in the switcher."
+ro3_domain:
+  type: string
+  default: "ro3.prontera.info"
+  description: "RO3 row sub-text (shown domain)."
+ro3_url:
+  type: string
+  default: "https://ro3.prontera.info"
+  description: "RO3 hub link target."
+
+roz_label:
+  type: string
+  default: "Ragnarok Online Zero"
+  description: "ROZ row label in the switcher."
+roz_domain:
+  type: string
+  default: "roz.prontera.info"
+  description: "ROZ row sub-text (shown domain)."
+roz_url:
+  type: string
+  default: "https://roz.prontera.info"
+  description: "ROZ hub link target."
+
+board_label:
+  type: string
+  default: "Board & Portal"
+  description: "Label of the board row in the switcher (this forum — marked 'You're here')."
+board_desc:
+  type: string
+  default: "Forum, guides and news for the whole network"
+  description: "Sub-text of the board row in the switcher."

@@ -1,7 +1,3 @@
 de:
   theme_metadata:
-    description: "Prontera-Marken-Skin fürs Community-Forum — dark-first Dual-Farbschema, Cinzel/Inter-Typografie und die Design-Sprache des Whitelabel-Hubs."
-    settings:
-      accent_color: "Interaktiver Akzent (Links, Buttons, aktive Tabs). Verdigris ist der gemeinsame Portal-Akzent; Banner Red / Gold passen zu den RO3-/ROZ-Siegeln."
-      parchment_texture: "Zeigt die dezente diagonale Pergament-Textur hinter dem Inhalt, passend zum Nuxt-Hub."
-      brand_wordmark: "Rendert den Seitentitel in der Display-Schrift Cinzel. Topic-Titel bleiben zur besseren Lesbarkeit immer in Inter."
+    description: "Prontera-Marken-Skin fürs Community-Forum — dark-first Dual-Farbschema, Cinzel/Inter-Typografie, Netzwerk-Switcher im Header, Klaro-Cookie-Consent mit consent-gebundenem GA4 und die Design-Sprache des Whitelabel-Hubs."

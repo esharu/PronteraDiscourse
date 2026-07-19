@@ -223,10 +223,15 @@ blockquote {
 /* -------------------------------------------------------------- brand footer */
 
 .prontera-footer {
+  max-width: 60rem;
+  margin: 0 auto;
   text-align: center;
-  padding: var(--p-radius-lg) 0;
-  font-size: 0.8rem;
+  padding: 1.25rem 1rem 1.75rem;
   color: var(--primary-medium);
+}
+.prontera-footer__brand {
+  font-size: 0.85rem;
+  margin-bottom: 0.6rem;
 }
 .prontera-footer__mark {
   font-family: var(--font-display);
@@ -237,4 +242,252 @@ blockquote {
 .prontera-footer__sep {
   margin: 0 8px;
   opacity: 0.5;
+}
+.prontera-footer__disclaimer {
+  font-size: 0.72rem;
+  line-height: 1.6;
+  color: var(--primary-medium);
+  margin: 0 auto 0.75rem;
+  opacity: 0.9;
+}
+.prontera-footer__cookie-settings {
+  background: none;
+  border: 1px solid var(--primary-low);
+  color: var(--primary-medium);
+  border-radius: var(--p-radius-full);
+  padding: 4px 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.prontera-footer__cookie-settings:hover {
+  border-color: var(--p-accent);
+  color: var(--primary-high);
+}
+
+/* ----------------------------------------------------------- network switcher */
+
+/* Hide Discourse's stock logo when our switcher is mounted. */
+html.prontera-switcher-on .d-header .home-logo,
+html.prontera-switcher-on .d-header .title {
+  display: none;
+}
+
+.prontera-switcher {
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: center;
+}
+
+.prontera-switcher__trigger {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: none;
+  border: 0;
+  padding: 4px 6px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: var(--header_primary);
+}
+.prontera-switcher__trigger:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.prontera-switcher__emblem {
+  flex: none;
+  width: 30px;
+  height: 34px;
+  display: block;
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+.prontera-switcher__wordmark {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+  text-align: left;
+}
+.prontera-switcher__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  font-size: 16px;
+  color: var(--header_primary);
+  transition: font-size 0.2s ease;
+}
+.prontera-switcher__tld {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 11.5px;
+  letter-spacing: 0.4px;
+  color: var(--p-gold);
+  text-transform: lowercase;
+}
+.prontera-switcher__sub {
+  font-size: 9px;
+  letter-spacing: 2.4px;
+  color: var(--p-accent-light);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.prontera-switcher__chev {
+  font-size: 10px;
+  color: var(--header_primary);
+  opacity: 0.6;
+  transition: transform 0.15s;
+}
+.prontera-switcher.is-open .prontera-switcher__chev {
+  transform: rotate(180deg);
+}
+
+.prontera-switcher__panel {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 8px);
+  width: min(340px, 92vw);
+  background: var(--secondary);
+  border: 1px solid var(--primary-low);
+  border-top: 3px solid var(--p-accent);
+  border-radius: 12px;
+  padding: 8px;
+  z-index: 1100;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.34);
+  display: none;
+}
+.prontera-switcher.is-open .prontera-switcher__panel {
+  display: block;
+}
+
+.prontera-switcher__heading {
+  font: 700 10px var(--font-ui);
+  letter-spacing: 1.8px;
+  color: var(--primary-medium);
+  text-transform: uppercase;
+  margin: 4px 8px 6px;
+}
+.prontera-switcher__row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 9px 8px;
+  border-radius: 9px;
+  color: var(--primary);
+}
+.prontera-switcher__row:hover {
+  background: var(--primary-very-low);
+  text-decoration: none;
+}
+.prontera-switcher__row--active {
+  background: color-mix(in srgb, var(--p-accent) 12%, transparent);
+}
+.prontera-switcher__seal {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--p-radius-full);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--p-parchment);
+}
+.prontera-switcher__seal[data-accent="banner-red"] {
+  background: var(--p-banner-red);
+}
+.prontera-switcher__seal[data-accent="gold"] {
+  background: var(--p-gold);
+}
+.prontera-switcher__ic {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  background: var(--primary-very-low);
+  border: 1px solid var(--primary-low);
+}
+.prontera-switcher__rowtext {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.prontera-switcher__rowtext b {
+  font-size: 13.5px;
+}
+.prontera-switcher__rowsub {
+  font-size: 11px;
+  color: var(--primary-medium);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.prontera-switcher__here {
+  margin-left: auto;
+  flex: none;
+  font: 700 8.5px var(--font-ui);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--p-accent-light);
+  border: 1px solid color-mix(in srgb, var(--p-accent) 40%, transparent);
+  border-radius: var(--p-radius-full);
+  padding: 2px 7px;
+}
+.prontera-switcher__divider {
+  height: 1px;
+  background: var(--primary-low);
+  margin: 6px 4px;
+}
+
+/* --------------------------------------------------- hero logo (homepage top) */
+
+/* Desktop only: enlarge the brand while at the top of the homepage. The header
+   grows with it and the switcher scales up; both transition back on scroll. */
+@media (min-width: 768px) {
+  html.prontera-top .d-header {
+    --prontera-hero-pad: 12px;
+  }
+  html.prontera-top .d-header .contents {
+    padding-block: var(--prontera-hero-pad, 12px);
+    transition: padding 0.2s ease;
+  }
+  html.prontera-top .prontera-switcher__emblem {
+    width: calc(var(--prontera-hero-logo-height, 68px) * 0.88);
+    height: var(--prontera-hero-logo-height, 68px);
+  }
+  html.prontera-top .prontera-switcher__name {
+    font-size: 26px;
+  }
+}
+
+/* ----------------------------------------------------------- Klaro theming */
+
+.klaro {
+  --font-family: var(--font-ui);
+  --border-radius: 12px;
+  --green1: var(--p-verdigris);
+  --green2: var(--p-verdigris-light);
+  --green3: #ffffff;
+  --dark1: #16232f;
+  --dark2: #1d2d3f;
+  --dark3: #31465c;
+  --light1: #f4ead2;
+  --light2: #c9bfa8;
+  --light3: #7c8aa0;
+}
+.klaro .cookie-notice,
+.klaro .cookie-modal .cm-modal {
+  font-family: var(--font-ui);
+}
+.klaro .cookie-notice .cn-ok .cm-btn.cm-btn-success,
+.klaro .cookie-modal .cm-btn.cm-btn-success {
+  color: #fff;
+}
+.klaro .cookie-modal .cm-modal .cm-header h1,
+.klaro .context-notice .cn-ok {
+  font-family: var(--font-display);
 }

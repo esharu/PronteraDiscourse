@@ -59,14 +59,35 @@ Typography rule (kept from the hub's lesson learned): **Cinzel** is used only
 for the brand wordmark, the hero and static-page H1 — **never** on topic
 titles or list rows, which stay in **Inter** for readability.
 
+## Features
+
+- **Network switcher** — the header logo is replaced by the Prontera brand
+  switcher (emblem + wordmark + dropdown), mirroring the hub headers: hop
+  between the RO3 / ROZ hubs and this board. URLs/labels are settings.
+- **Hero logo** — on the homepage, the brand is enlarged while scrolled to the
+  top and shrinks back on scroll (desktop only).
+- **Cookie consent (Klaro!)** — open-source CMP. Analytics load **only** after
+  consent; a *Cookie settings* link in the footer re-opens it.
+- **GA4** — loaded via `gtag.js` through the Klaro `google-analytics` service,
+  so nothing tracks before consent.
+- **Legal footer** — the non-commercial fan-project disclaimer, site-wide.
+
 ## Settings
 
-**Theme:** interactive accent (Verdigris / Banner Red / Gold), parchment
-texture toggle, brand wordmark toggle.
+Interactive accent (Verdigris / Banner Red / Gold), parchment texture, brand
+wordmark, hero-logo enlarge + height, the network switcher (enable, hub URLs,
+labels), cookie consent (enable), **`ga4_measurement_id`** (e.g. `G-XXXX`), and
+the privacy-policy URL.
 
-**Portal:** all hero copy and both instance cards (name, tagline, URL,
-enable/disable) are editable — no code changes needed to retune the
-homepage.
+> **Important:** put your GA4 ID in `ga4_measurement_id` and keep Discourse's
+> built-in Google Analytics setting **empty**, otherwise analytics load
+> ungated (bypassing consent).
+
+### Self-hosting Klaro (optional)
+
+By default `klaro.js` / `klaro.min.css` load from a pinned jsDelivr build
+(`head_tag.html`, `KLARO_BASE`). To avoid the external request, upload the two
+files to the theme and point `KLARO_BASE` at their URLs.
 
 ## Local development
 

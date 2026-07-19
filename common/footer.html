@@ -1,9 +1,27 @@
 <!--
-  Small brand footer line, echoing the Nuxt hub footer. Kept text-only so it
-  works on any Discourse version without extra assets.
+  Brand footer + legal fan-project disclaimer, shown site-wide. The
+  "Cookie settings" button re-opens the consent banner (wired up in the
+  prontera-consent initializer).
 -->
 <div class="prontera-footer">
-  <span class="prontera-footer__mark">Prontera</span>
-  <span class="prontera-footer__sep">·</span>
-  <span class="prontera-footer__tagline">Ragnarok Online Community Hub</span>
+  <div class="prontera-footer__brand">
+    <span class="prontera-footer__mark">Prontera</span>
+    <span class="prontera-footer__sep">·</span>
+    <span class="prontera-footer__tagline">Ragnarok Online Community Hub</span>
+  </div>
+
+  <p class="prontera-footer__disclaimer">
+    Prontera.info is a non-commercial fan project created for informational
+    and entertainment purposes only. We do not claim ownership of any official
+    assets, names, or media related to Ragnarok Online 3 or other elements of
+    the franchise. All content, trademarks, and intellectual property rights
+    belong to their respective owners, especially © Gravity Co., Ltd. and Lee
+    MyoungJin (studio DTDS). No infringement is intended. If any rights holders
+    wish for content to be removed or amended, please contact us, and we will
+    comply immediately.
+  </p>
+
+  <button type="button" class="prontera-footer__cookie-settings">
+    Cookie settings
+  </button>
 </div>
