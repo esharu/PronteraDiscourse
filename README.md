@@ -83,11 +83,15 @@ the privacy-policy URL.
 > built-in Google Analytics setting **empty**, otherwise analytics load
 > ungated (bypassing consent).
 
-### Self-hosting Klaro (optional)
+### Klaro is self-hosted
 
-By default `klaro.js` / `klaro.min.css` load from a pinned jsDelivr build
-(`head_tag.html`, `KLARO_BASE`). To avoid the external request, upload the two
-files to the theme and point `KLARO_BASE` at their URLs.
+`assets/klaro.js` (Klaro 0.7.21, CSS bundled) ships with the theme and is
+declared in `about.json` under `assets.klaro`. It loads from the forum origin
+via `settings.theme_uploads.klaro`, so Discourse's Content-Security-Policy does
+not block it and no external CDN request is made. To upgrade Klaro, replace
+that file. The banner is initialised explicitly with `klaro.setup()` in
+`head_tag.html` (auto-init via `data-config` does not work for dynamically
+injected scripts).
 
 ## Local development
 

@@ -120,15 +120,23 @@
       ],
     };
 
-    const KLARO_BASE = "https://cdn.jsdelivr.net/npm/klaro@0.7.22/dist";
-    const css = document.createElement("link");
-    css.rel = "stylesheet";
-    css.href = KLARO_BASE + "/klaro.min.css";
-    document.head.appendChild(css);
-    const js = document.createElement("script");
-    js.defer = true;
-    js.src = KLARO_BASE + "/klaro.js";
-    js.setAttribute("data-config", "klaroConfig");
-    document.head.appendChild(js);
+    // Klaro is self-hosted as a theme asset (about.json → assets.klaro) so it
+    // is served from the forum origin and is not blocked by Discourse's CSP.
+    // It also carries its own CSS, so no extra stylesheet is needed.
+    //
+    // We call klaro.setup() explicitly instead of relying on the data-config
+    // auto-init: dynamically injected scripts have document.currentScript ===
+    // null, so Klaro's auto-init cannot find the config on its own.
+    const klaroUrl = settings.theme_uploads && settings.theme_uploads.klaro;
+    if (klaroUrl) {
+      const js = document.createElement("script");
+      js.src = klaroUrl;
+      js.onload = function () {
+        if (window.klaro && typeof window.klaro.setup === "function") {
+          window.klaro.setup(window.klaroConfig);
+        }
+      };
+      document.head.appendChild(js);
+    }
   }
 </script>

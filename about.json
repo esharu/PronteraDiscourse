@@ -5,7 +5,9 @@
   "authors": "Prontera",
   "component": false,
   "learn_more": "https://prontera.info",
-  "assets": {},
+  "assets": {
+    "klaro": "assets/klaro.js"
+  },
   "color_schemes": {
     "Prontera Dark": {
       "primary": "f4ead2",
