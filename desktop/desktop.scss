@@ -1,0 +1,11 @@
+/* Desktop-only refinements for the Prontera skin. */
+
+/* Slightly roomier content column, closer to the hub's 70rem shell. */
+#main-outlet {
+  max-width: 1120px;
+}
+
+/* Sticky header depth on wider viewports. */
+.d-header {
+  backdrop-filter: blur(6px);
+}

@@ -1,0 +1,39 @@
+{
+  "name": "Prontera",
+  "about_url": "https://prontera.info",
+  "license_url": "https://github.com/esharu/printera",
+  "authors": "Prontera",
+  "component": false,
+  "learn_more": "https://prontera.info",
+  "assets": {},
+  "color_schemes": {
+    "Prontera Dark": {
+      "primary": "f4ead2",
+      "secondary": "16232f",
+      "tertiary": "37877b",
+      "quaternary": "d9a441",
+      "header_background": "1d2d3f",
+      "header_primary": "f4ead2",
+      "highlight": "d9a441",
+      "selected": "243748",
+      "hover": "243748",
+      "danger": "c4453c",
+      "success": "4fa396",
+      "love": "f08ba5"
+    },
+    "Prontera Light": {
+      "primary": "1d2d3f",
+      "secondary": "efe7d2",
+      "tertiary": "37877b",
+      "quaternary": "d9a441",
+      "header_background": "1d2d3f",
+      "header_primary": "f4ead2",
+      "highlight": "d9a441",
+      "selected": "f1e9d6",
+      "hover": "f1e9d6",
+      "danger": "c4453c",
+      "success": "37877b",
+      "love": "f08ba5"
+    }
+  }
+}

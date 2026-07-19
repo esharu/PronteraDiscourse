@@ -1,0 +1,23 @@
+# Prontera theme settings — exposed in Admin → Customize → Themes → Prontera.
+# The forum lives on the root domain (prontera.info) and is shared by both
+# whitelabel instances, so the interactive accent defaults to Verdigris.
+# The instance seal colors (Banner Red / Gold) live on the portal cards.
+
+accent_color:
+  type: enum
+  default: verdigris
+  choices:
+    - verdigris
+    - banner_red
+    - gold
+  description: "Interactive accent (links, buttons, active tabs). Verdigris is the shared portal accent; Banner Red / Gold match the RO3 / ROZ seals."
+
+parchment_texture:
+  type: bool
+  default: true
+  description: "Show the subtle diagonal parchment texture behind the content, matching the Nuxt hub shell."
+
+brand_wordmark:
+  type: bool
+  default: true
+  description: "Render the site title in the Cinzel display font (brand wordmark). Topic titles always stay in Inter for readability."

@@ -1,0 +1,12 @@
+/* Mobile-only refinements for the Prontera skin. */
+
+/* Keep category pills legible when they wrap on narrow screens. */
+.badge-category__wrapper .badge-category {
+  font-size: 0.7rem;
+  padding: 2px 8px;
+}
+
+/* Tighten the wordmark so it never overflows the mobile header. */
+html[data-prontera-wordmark="on"] .d-header .title a .site-title {
+  letter-spacing: 0.8px;
+}

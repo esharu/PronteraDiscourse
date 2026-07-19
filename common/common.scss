@@ -1,0 +1,240 @@
+/*
+ * Prontera — Discourse skin.
+ *
+ * Mirrors the Nuxt hub design system (app/assets/css/tokens.css + ui.css,
+ * klick-dummy v3.3). The dark/light surfaces themselves come from the two
+ * color schemes in about.json; this file adds the brand tokens, typography
+ * rules, radii and component polish on top of Discourse's variables.
+ *
+ * Design guardrail (docs/branding.md, "Typografie"): Cinzel is reserved for
+ * the brand wordmark / hero / static-page H1. It is deliberately NOT used on
+ * topic titles or long list rows — the old theme did that and it read too wide
+ * with weak contrast. Topic titles stay in Inter.
+ */
+
+:root {
+  /* Brand palette — theme-independent (docs/branding.md, "Farb-Tokens") */
+  --p-midnight: #1d2d3f;
+  --p-parchment: #f4ead2;
+  --p-verdigris: #37877b;
+  --p-verdigris-light: #4fa396;
+  --p-banner-red: #c4453c;
+  --p-banner-red-light: #d9605a;
+  --p-gold: #d9a441;
+  --p-gold-light: #e4ba66;
+  --p-poring: #f08ba5;
+
+  /* Fonts */
+  --font-display: "Cinzel", "Georgia", serif;
+  --font-ui: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Radii (klick-dummy v3.3) */
+  --p-radius-sm: 4px;
+  --p-radius-md: 8px;
+  --p-radius-lg: 13px;
+  --p-radius-full: 999px;
+
+  /* Interactive accent — default; overridden below per theme setting */
+  --p-accent: var(--p-verdigris);
+  --p-accent-light: var(--p-verdigris-light);
+}
+
+/* Accent is selected via the "accent_color" theme setting (bridged in
+   head_tag.html onto [data-prontera-accent]). */
+:root[data-prontera-accent="banner_red"] {
+  --p-accent: var(--p-banner-red);
+  --p-accent-light: var(--p-banner-red-light);
+}
+:root[data-prontera-accent="gold"] {
+  --p-accent: var(--p-gold);
+  --p-accent-light: var(--p-gold-light);
+}
+
+/* ---------------------------------------------------------------- typography */
+
+html {
+  font-family: var(--font-ui);
+}
+
+body {
+  font-family: var(--font-ui);
+}
+
+/* Brand wordmark in the header — the one place Cinzel is welcome.
+   Gated on the "brand_wordmark" setting. */
+html[data-prontera-wordmark="on"] .d-header #site-text-logo,
+html[data-prontera-wordmark="on"] .d-header .title a .site-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+/* Static-page / hero headings (about, FAQ, topic-less pages). */
+.static-page h1,
+.about-page h1,
+.body-page h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+/* Topic titles: explicitly kept in the UI font, never the display face. */
+.topic-list .link-top-line .title,
+.topic-list-item .title,
+#topic-title h1,
+.fancy-title {
+  font-family: var(--font-ui);
+  letter-spacing: normal;
+}
+
+/* ------------------------------------------------------------- parchment bg */
+
+html {
+  --p-texture: repeating-linear-gradient(
+    45deg,
+    rgba(244, 234, 210, 0.018) 0 2px,
+    transparent 2px 7px
+  );
+}
+.light-scheme,
+[data-theme="light"] {
+  --p-texture: repeating-linear-gradient(
+    45deg,
+    rgba(29, 45, 63, 0.028) 0 2px,
+    transparent 2px 7px
+  );
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--p-texture);
+}
+/* Toggle via the "parchment_texture" setting. */
+html[data-prontera-texture="off"] body::before {
+  display: none;
+}
+
+/* --------------------------------------------------------------------- links */
+
+a,
+.d-header .icon:hover,
+.widget-link:hover {
+  color: var(--p-accent-light);
+}
+
+/* ------------------------------------------------------------------- buttons */
+
+.btn.btn-primary {
+  background: var(--p-accent);
+  border-radius: var(--p-radius-md);
+  font-weight: 600;
+}
+.btn.btn-primary:hover,
+.btn.btn-primary:focus {
+  background: var(--p-accent-light);
+}
+
+.btn {
+  border-radius: var(--p-radius-md);
+}
+
+/* ------------------------------------------------------------------- header */
+
+.d-header {
+  border-bottom: 1px solid var(--p-midnight);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* Active section underline, matching the hub nav (inset accent bar). */
+.nav-pills > li > a.active,
+.nav-pills > li > button.active {
+  color: var(--p-accent-light);
+  box-shadow: inset 0 -2px 0 var(--p-accent);
+}
+
+/* ------------------------------------------------------------- topic list */
+
+/* Card-like hover row (echoes ui.css .topic). */
+.topic-list .topic-list-item {
+  transition: background 0.15s, box-shadow 0.15s;
+}
+.topic-list .topic-list-item:hover {
+  box-shadow: inset 3px 0 0 var(--p-accent);
+}
+
+/* Category badges as rounded pills (ui.css .badge-cat vocabulary). */
+.badge-category__wrapper .badge-category {
+  border-radius: var(--p-radius-full);
+  padding: 3px 10px;
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.5px;
+}
+
+/* Reply / post counts pick up the accent when hot. */
+.topic-list .num.posts-map .badge-posts {
+  font-weight: 700;
+}
+
+/* --------------------------------------------------------------- categories */
+
+/* Category boxes as elevated cards (ui.css .card). */
+.category-boxes .category-box,
+.category-boxes-with-topics .category-box {
+  border: 1px solid var(--primary-low);
+  border-radius: var(--p-radius-lg);
+  transition: border-color 0.15s, transform 0.18s ease, box-shadow 0.18s ease;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .category-boxes .category-box:hover,
+  .category-boxes-with-topics .category-box:hover {
+    border-color: var(--p-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(8, 16, 26, 0.35);
+  }
+}
+
+/* -------------------------------------------------------------- blockquote */
+
+blockquote {
+  border-left: 3px solid var(--p-verdigris);
+  background: var(--secondary-high, var(--primary-very-low));
+  border-radius: 0 var(--p-radius-sm) var(--p-radius-sm) 0;
+}
+
+/* -------------------------------------------------------------------- misc */
+
+/* Date accents in gold, echoing the hub's .news-date. */
+.relative-date,
+.post-date {
+  color: var(--p-gold);
+}
+
+/* Primary user/staff pips and "new" dots use the accent. */
+.topic-post-badges .badge-notification.new-topic,
+.topic-list .topic-list-item.unseen-topic .title {
+  color: var(--p-accent-light);
+}
+
+/* -------------------------------------------------------------- brand footer */
+
+.prontera-footer {
+  text-align: center;
+  padding: var(--p-radius-lg) 0;
+  font-size: 0.8rem;
+  color: var(--primary-medium);
+}
+.prontera-footer__mark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--primary-high);
+}
+.prontera-footer__sep {
+  margin: 0 8px;
+  opacity: 0.5;
+}

@@ -1,0 +1,21 @@
+<!--
+  Load the two brand faces (docs/branding.md → "Typografie"):
+    - Cinzel   → display font, brand wordmark / hero / static-page H1 only
+    - Inter    → all UI and body text
+  Weights mirror the Nuxt @nuxt/fonts config (Cinzel 600/700, Inter 400-700).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&display=swap"
+/>
+
+<script type="text/discourse-plugin" version="0.8">
+  // Bridge theme settings onto data-attributes so the SCSS can resolve the
+  // active accent / toggles without a build-time branch.
+  const root = document.documentElement;
+  root.setAttribute("data-prontera-accent", settings.accent_color || "verdigris");
+  root.setAttribute("data-prontera-texture", settings.parchment_texture ? "on" : "off");
+  root.setAttribute("data-prontera-wordmark", settings.brand_wordmark ? "on" : "off");
+</script>
