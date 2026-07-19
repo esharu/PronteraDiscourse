@@ -44,7 +44,13 @@ export default apiInitializer("1.14.0", () => {
       window.dataLayer.push(arguments);
     };
     window.gtag("js", new Date());
-    window.gtag("config", gaId, { anonymize_ip: true });
+    // Keep GA4 analytics-only: no Google Signals / ad-personalization, so gtag
+    // does not set the DoubleClick / .google.com advertising cookies.
+    window.gtag("config", gaId, {
+      anonymize_ip: true,
+      allow_google_signals: false,
+      allow_ad_personalization_signals: false,
+    });
   };
 
   window.klaroConfig = {
