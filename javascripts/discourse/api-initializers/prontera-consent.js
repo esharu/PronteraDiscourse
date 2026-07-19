@@ -72,10 +72,22 @@ export default apiInitializer("1.14.0", () => {
             "We'd like to use analytics cookies to improve the site. {purposes} — no analytics run without your consent.",
           learnMore: "Let me choose",
         },
-        purposes: { analytics: "Analytics" },
+        purposes: { functional: "Necessary", analytics: "Analytics", social: "Social / embeds" },
+        essential: {
+          title: "Essential (Discourse)",
+          description: "Session, login and security cookies the forum needs to work. Always on.",
+        },
+        "discord-sso": {
+          title: "Discord login",
+          description: "Only used if you choose to sign in with Discord. Always on.",
+        },
         "google-analytics": {
           title: "Google Analytics 4",
           description: "Anonymized usage statistics (page views, referrers).",
+        },
+        "discord-widget": {
+          title: "Discord widget",
+          description: "Loads Discord to show an embedded server widget (only where embedded).",
         },
         ok: "Accept",
         acceptAll: "Accept all",
@@ -95,10 +107,22 @@ export default apiInitializer("1.14.0", () => {
             "Wir würden gern Analyse-Cookies zur Verbesserung der Seite einsetzen. {purposes} — ohne deine Zustimmung läuft keine Analyse.",
           learnMore: "Auswählen",
         },
-        purposes: { analytics: "Statistik" },
+        purposes: { functional: "Notwendig", analytics: "Statistik", social: "Social / Einbettungen" },
+        essential: {
+          title: "Essenziell (Discourse)",
+          description: "Sitzungs-, Login- und Sicherheits-Cookies, die das Forum zum Funktionieren braucht. Immer aktiv.",
+        },
+        "discord-sso": {
+          title: "Discord-Login",
+          description: "Wird nur genutzt, wenn du dich mit Discord anmeldest. Immer aktiv.",
+        },
         "google-analytics": {
           title: "Google Analytics 4",
           description: "Anonymisierte Nutzungsstatistik (Seitenaufrufe, Verweise).",
+        },
+        "discord-widget": {
+          title: "Discord-Widget",
+          description: "Lädt Discord, um ein eingebettetes Server-Widget anzuzeigen (nur wo eingebunden).",
         },
         ok: "Akzeptieren",
         acceptAll: "Alle akzeptieren",
@@ -109,6 +133,32 @@ export default apiInitializer("1.14.0", () => {
       },
     },
     services: [
+      // Strictly necessary — Discourse's own session/login/security cookies.
+      // Consent-exempt under GDPR, listed for transparency and always on.
+      {
+        name: "essential",
+        title: "Essential (Discourse)",
+        purposes: ["functional"],
+        cookies: [
+          [/^_t$/i],
+          [/^_forum_session$/i],
+          [/^_bypass_cache$/i],
+          [/^destination_url$/i],
+          [/^cn$/i],
+        ],
+        required: true,
+        default: true,
+      },
+      // Discord as a login provider — only active when the visitor chooses to
+      // sign in with Discord, so it is functional/necessary, not opt-in.
+      {
+        name: "discord-sso",
+        title: "Discord login",
+        purposes: ["functional"],
+        required: true,
+        default: true,
+      },
+      // Optional analytics — the only opt-in service by default.
       {
         name: "google-analytics",
         title: "Google Analytics 4",
@@ -124,6 +174,17 @@ export default apiInitializer("1.14.0", () => {
             window["ga-disable-" + gaId] = true;
           }
         },
+      },
+      // Embedded Discord server widget — opt-in. Inert until an embed is
+      // wired to it (mark the embed with data-name="discord-widget" so Klaro's
+      // contextual blocking shows a placeholder until consent). See README.
+      {
+        name: "discord-widget",
+        title: "Discord widget",
+        purposes: ["social"],
+        required: false,
+        optOut: false,
+        default: false,
       },
     ],
   };

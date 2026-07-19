@@ -6,7 +6,9 @@
   "component": false,
   "learn_more": "https://prontera.info",
   "assets": {
-    "klaro": "assets/klaro.js"
+    "klaro": "assets/klaro.js",
+    "cinzel": "assets/fonts/cinzel.woff2",
+    "inter": "assets/fonts/inter.woff2"
   },
   "color_schemes": {
     "Prontera Dark": {

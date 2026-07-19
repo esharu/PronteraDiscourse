@@ -67,9 +67,14 @@ titles or list rows, which stay in **Inter** for readability.
 - **Hero logo** — on the homepage, the brand is enlarged while scrolled to the
   top and shrinks back on scroll (desktop only).
 - **Cookie consent (Klaro!)** — open-source CMP. Analytics load **only** after
-  consent; a *Cookie settings* link in the footer re-opens it.
+  consent; a *Cookie settings* link in the footer re-opens it. Declared
+  services: *Essential (Discourse)* and *Discord login* (necessary, always on),
+  *Google Analytics 4* (opt-in), *Discord widget* (opt-in, social).
 - **GA4** — loaded via `gtag.js` through the Klaro `google-analytics` service,
   so nothing tracks before consent.
+- **Self-hosted fonts** — Cinzel + Inter (variable woff2) ship as theme assets;
+  no request to Google Fonts (avoids the German GDPR issue with
+  `fonts.gstatic.com`).
 - **Legal footer** — the non-commercial fan-project disclaimer, site-wide.
 
 ## Settings
@@ -86,12 +91,26 @@ the privacy-policy URL.
 ### Klaro is self-hosted
 
 `assets/klaro.js` (Klaro 0.7.21, CSS bundled) ships with the theme and is
-declared in `about.json` under `assets.klaro`. It loads from the forum origin
-via `settings.theme_uploads.klaro`, so Discourse's Content-Security-Policy does
-not block it and no external CDN request is made. To upgrade Klaro, replace
-that file. The banner is initialised explicitly with `klaro.setup()` in
-`head_tag.html` (auto-init via `data-config` does not work for dynamically
-injected scripts).
+declared in `about.json` under `assets.klaro`. It is loaded from the forum
+origin via `discourse/lib/load-script` in the `prontera-consent`
+api-initializer (`settings.theme_uploads.klaro`), so Discourse's
+Content-Security-Policy does not block it and no external CDN request is made.
+The banner is initialised explicitly with `klaro.setup()`. To upgrade Klaro,
+replace that file.
+
+### Fonts are self-hosted
+
+`assets/fonts/cinzel.woff2` and `assets/fonts/inter.woff2` (variable, latin) are
+declared as `assets.cinzel` / `assets.inter` and `@font-face`'d in
+`common.scss` via `$cinzel` / `$inter`. Latin covers German umlauts; add the
+`latin-ext` subset if you need more glyphs.
+
+### Wiring an embedded Discord widget to consent
+
+The `discord-widget` service is opt-in but inert until you embed a widget. To
+gate an embed, mark its script/iframe with `data-name="discord-widget"` and
+`data-type="text/plain"` so Klaro shows a placeholder until the visitor
+consents (Klaro contextual blocking).
 
 ## Local development
 
