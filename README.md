@@ -10,33 +10,35 @@ The design is derived from the hub sources in
 [`esharu/printera`](https://github.com/esharu/printera):
 `docs/branding.md`, `app/assets/css/tokens.css` and `app/assets/css/ui.css`.
 
-## What's in here
+## This repo = the main theme (skin)
 
-| Path        | Discourse artifact | Install as |
-|-------------|--------------------|------------|
-| `/` (root)  | **Prontera** — the main theme (skin) | Theme |
-| `/portal`   | **Prontera Portal** — homepage hero + RO3/ROZ instance cards | Component of the Prontera theme |
+Discourse installs one theme per repository root, so the skin and the
+homepage portal live in **two repos**:
 
-Two separate installs from **one** repo.
+| Repo | Discourse artifact | Install as |
+|---|---|---|
+| **esharu/PronteraDiscourse** (this repo) | **Prontera** — the main theme (skin) | Theme |
+| [**esharu/PronteraDiscoursePortal**](https://github.com/esharu/PronteraDiscoursePortal) | **Prontera Portal** — homepage hero + RO3/ROZ instance cards | Component of the Prontera theme |
 
 ## Install
 
-Both are installed via **Admin → Customize → Themes → Install → From a git repository**.
+Both are installed via **Admin → Customize → Themes → Install → From a git
+repository** (use the `.git` clone URL, not a GitHub `/tree/...` browser URL).
 
-1. **Theme:** import `https://github.com/esharu/pronteradiscourse`
-   (root `about.json`). It ships two color schemes — **Prontera Dark**
-   (default) and **Prontera Light**. Set Prontera Dark as the default
-   scheme and Prontera Light as the light-mode scheme so Discourse's
-   built-in dark/light toggle matches the hub ("Dark ist Default, Light per
-   Toggle", `docs/branding.md`).
-2. **Portal component:** import the same repo again, this time pointing at
-   the **`portal`** subdirectory (the "Advanced" install lets you specify a
-   subfolder), then add it as a component of the Prontera theme under
-   *Included components*.
-
-> Import from a subfolder is supported by Discourse's git installer via the
-> subfolder field. If your version predates that, split `portal/` into its
-> own repo — it is fully self-contained.
+1. **Theme (this repo):**
+   ```
+   https://github.com/esharu/PronteraDiscourse.git
+   ```
+   It ships two color schemes — **Prontera Dark** (default) and **Prontera
+   Light**. Set Prontera Dark as the default scheme and Prontera Light as the
+   light-mode scheme so Discourse's built-in dark/light toggle matches the
+   hub ("Dark ist Default, Light per Toggle", `docs/branding.md`).
+2. **Portal component:**
+   ```
+   https://github.com/esharu/PronteraDiscoursePortal.git
+   ```
+   Then add it as a component of the Prontera theme under *Included
+   components*.
 
 ## Design mapping
 
