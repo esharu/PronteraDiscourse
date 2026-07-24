@@ -67,7 +67,7 @@ brand_subline:
 
 network_heading:
   type: string
-  default: "Prontera Network"
+  default: "The Prontera.info Network"
   description: "Heading shown at the top of the switcher dropdown."
 
 ro3_label:
