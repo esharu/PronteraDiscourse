@@ -267,6 +267,24 @@ blockquote {
   margin: 0 auto 0.75rem;
   opacity: 0.9;
 }
+.prontera-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.75rem;
+}
+.prontera-footer__links a {
+  color: var(--primary-medium);
+  font-weight: 600;
+}
+.prontera-footer__links a:hover {
+  color: var(--p-accent-light);
+}
+.prontera-footer__dot {
+  opacity: 0.4;
+}
 .prontera-footer__cookie-settings {
   background: none;
   border: 1px solid var(--primary-low);

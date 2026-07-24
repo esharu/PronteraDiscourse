@@ -50,8 +50,8 @@ ga4_measurement_id:
 
 privacy_policy_url:
   type: string
-  default: "/privacy"
-  description: "URL of the privacy policy, linked from the consent banner (relative like /privacy or an absolute URL)."
+  default: "https://prontera.info/privacy"
+  description: "URL of the privacy policy, linked from the consent banner."
 
 # ---- Network switcher (the brand logo doubles as a hub switcher, like the hubs) ----
 

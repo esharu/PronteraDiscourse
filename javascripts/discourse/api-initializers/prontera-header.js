@@ -128,31 +128,52 @@ function buildSwitcher() {
 
   wrap.appendChild(panel);
 
-  // Open / close behaviour.
-  let open = false;
-  const setOpen = (v) => {
-    open = v;
-    wrap.classList.toggle("is-open", v);
-    trigger.setAttribute("aria-expanded", v ? "true" : "false");
-  };
-  trigger.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setOpen(!open);
-  });
+  // Open/close is handled by delegated document listeners (see initializer),
+  // so the switcher keeps working across Discourse's header re-renders.
+  return wrap;
+}
+
+// Close every open switcher.
+function closeSwitchers() {
+  document
+    .querySelectorAll(".prontera-switcher.is-open")
+    .forEach((sw) => {
+      sw.classList.remove("is-open");
+      const t = sw.querySelector(".prontera-switcher__trigger");
+      if (t) {
+        t.setAttribute("aria-expanded", "false");
+      }
+    });
+}
+
+// One set of delegated listeners for all (re-)mounted switchers.
+function installSwitcherEvents() {
+  if (window.__pronteraSwitcherEvents) {
+    return;
+  }
+  window.__pronteraSwitcherEvents = true;
+
   document.addEventListener("click", (e) => {
-    if (open && !wrap.contains(e.target)) {
-      setOpen(false);
+    const trigger =
+      e.target.closest && e.target.closest(".prontera-switcher__trigger");
+    if (trigger) {
+      e.preventDefault();
+      const sw = trigger.closest(".prontera-switcher");
+      const willOpen = !sw.classList.contains("is-open");
+      closeSwitchers();
+      sw.classList.toggle("is-open", willOpen);
+      trigger.setAttribute("aria-expanded", willOpen ? "true" : "false");
+      return;
     }
+    // Click on a menu row or anywhere outside → close.
+    closeSwitchers();
   });
+
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
-      setOpen(false);
+      closeSwitchers();
     }
   });
-  panel.addEventListener("click", () => setOpen(false));
-
-  return wrap;
 }
 
 function mountSwitcher() {
@@ -195,8 +216,11 @@ export default apiInitializer("1.14.0", (api) => {
 
   window.addEventListener("scroll", updateHero, { passive: true });
 
+  installSwitcherEvents();
+
   api.onPageChange(() => {
     mountSwitcher();
+    closeSwitchers();
     updateHero();
   });
 
