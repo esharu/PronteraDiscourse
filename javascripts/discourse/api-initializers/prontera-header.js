@@ -126,24 +126,30 @@ function buildSwitcher() {
     })
   );
 
-  wrap.appendChild(panel);
+  // The panel is NOT nested in the header — it is appended to <body> at mount
+  // time and positioned as `fixed`, so the header's overflow/transform can
+  // never clip it. The trigger keeps a reference to its panel.
+  wrap._panel = panel;
+  trigger._panel = panel;
 
-  // Open/close is handled by delegated document listeners (see initializer),
-  // so the switcher keeps working across Discourse's header re-renders.
   return wrap;
 }
 
-// Close every open switcher.
+// Position the panel just under its trigger (viewport coordinates).
+function positionPanel(trigger, panel) {
+  const r = trigger.getBoundingClientRect();
+  panel.style.top = Math.round(r.bottom + 8) + "px";
+  panel.style.left = Math.round(r.left) + "px";
+}
+
+// Close every open switcher panel.
 function closeSwitchers() {
   document
-    .querySelectorAll(".prontera-switcher.is-open")
-    .forEach((sw) => {
-      sw.classList.remove("is-open");
-      const t = sw.querySelector(".prontera-switcher__trigger");
-      if (t) {
-        t.setAttribute("aria-expanded", "false");
-      }
-    });
+    .querySelectorAll(".prontera-switcher__panel.is-open")
+    .forEach((p) => p.classList.remove("is-open"));
+  document
+    .querySelectorAll(".prontera-switcher__trigger[aria-expanded='true']")
+    .forEach((t) => t.setAttribute("aria-expanded", "false"));
 }
 
 // One set of delegated listeners for all (re-)mounted switchers.
@@ -158,14 +164,18 @@ function installSwitcherEvents() {
       e.target.closest && e.target.closest(".prontera-switcher__trigger");
     if (trigger) {
       e.preventDefault();
-      const sw = trigger.closest(".prontera-switcher");
-      const willOpen = !sw.classList.contains("is-open");
+      e.stopPropagation();
+      const panel = trigger._panel;
+      const willOpen = panel && !panel.classList.contains("is-open");
       closeSwitchers();
-      sw.classList.toggle("is-open", willOpen);
-      trigger.setAttribute("aria-expanded", willOpen ? "true" : "false");
+      if (willOpen) {
+        positionPanel(trigger, panel);
+        panel.classList.add("is-open");
+        trigger.setAttribute("aria-expanded", "true");
+      }
       return;
     }
-    // Click on a menu row or anywhere outside → close.
+    // A click inside the panel (e.g. a menu link) or anywhere else → close.
     closeSwitchers();
   });
 
@@ -174,16 +184,27 @@ function installSwitcherEvents() {
       closeSwitchers();
     }
   });
+
+  // A fixed panel would detach from the trigger on scroll/resize — just close.
+  window.addEventListener("scroll", closeSwitchers, { passive: true });
+  window.addEventListener("resize", closeSwitchers);
 }
 
 function mountSwitcher() {
   if (!settings.network_switcher_enabled) {
     return;
   }
-  const header = document.querySelector(".d-header .contents") || document.querySelector(".d-header");
+  const header =
+    document.querySelector(".d-header .contents") ||
+    document.querySelector(".d-header");
   if (!header || header.querySelector(".prontera-switcher")) {
     return;
   }
+  // Drop any panel orphaned in <body> by a previous mount before rebuilding.
+  document
+    .querySelectorAll("body > .prontera-switcher__panel")
+    .forEach((p) => p.remove());
+
   const logo = header.querySelector(".home-logo, .title");
   const switcher = buildSwitcher();
   if (logo) {
@@ -191,6 +212,7 @@ function mountSwitcher() {
   } else {
     header.insertBefore(switcher, header.firstChild);
   }
+  document.body.appendChild(switcher._panel);
   document.documentElement.classList.add("prontera-switcher-on");
 }
 

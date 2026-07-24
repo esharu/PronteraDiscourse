@@ -373,25 +373,25 @@ html.prontera-switcher-on .d-header .title {
   opacity: 0.6;
   transition: transform 0.15s;
 }
-.prontera-switcher.is-open .prontera-switcher__chev {
+.prontera-switcher__trigger[aria-expanded="true"] .prontera-switcher__chev {
   transform: rotate(180deg);
 }
 
+/* Panel lives at <body> level and is positioned as fixed by JS, so no header
+   overflow/transform can clip it. */
 .prontera-switcher__panel {
-  position: absolute;
-  left: 0;
-  top: calc(100% + 8px);
+  position: fixed;
   width: min(340px, 92vw);
   background: var(--secondary);
   border: 1px solid var(--primary-low);
   border-top: 3px solid var(--p-accent);
   border-radius: 12px;
   padding: 8px;
-  z-index: 1100;
+  z-index: 1200;
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.34);
   display: none;
 }
-.prontera-switcher.is-open .prontera-switcher__panel {
+.prontera-switcher__panel.is-open {
   display: block;
 }
 
