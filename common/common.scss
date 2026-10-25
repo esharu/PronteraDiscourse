@@ -743,6 +743,103 @@ blockquote {
   color: var(--p-faint);
 }
 
+/* ------------------------------------------------- insert from the database */
+.prontera-insert-db .d-modal__container {
+  max-width: 560px;
+}
+.prontera-insert-db__games {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.prontera-insert-db__input {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+}
+.prontera-insert-db__hint,
+.prontera-insert-db__status {
+  margin: 6px 0 10px;
+  font-size: 12px;
+  color: var(--p-faint);
+}
+.prontera-insert-db__results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+.prontera-insert-db__hit {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: var(--p-radius-md);
+  background: transparent;
+  color: var(--primary);
+  text-align: left;
+  cursor: pointer;
+}
+.prontera-insert-db__hit:hover,
+.prontera-insert-db__hit:focus-visible {
+  background: var(--p-card-2);
+}
+.prontera-insert-db__art {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: #16232f;
+  border: 1px solid var(--p-line);
+}
+.prontera-insert-db__art img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.prontera-insert-db__text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.prontera-insert-db__name {
+  font-weight: 600;
+}
+.prontera-insert-db__sub {
+  font-size: 12px;
+  color: var(--p-dim);
+}
+.prontera-insert-db__kind {
+  flex: none;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #22403f;
+  color: #8fd0c4;
+}
+.prontera-insert-db__hit[data-type="mob"] .prontera-insert-db__kind {
+  background: #3f2a2f;
+  color: #e8908a;
+}
+.prontera-insert-db__hit[data-type="map"] .prontera-insert-db__kind {
+  background: #22344d;
+  color: #8fbbe8;
+}
+.prontera-insert-db__hit[data-type="npc"] .prontera-insert-db__kind {
+  background: #3a2f4a;
+  color: #c3b2f0;
+}
+
 /* ----------------------------------------------------------- Klaro theming */
 
 .klaro {

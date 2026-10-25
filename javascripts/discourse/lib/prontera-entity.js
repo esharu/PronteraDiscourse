@@ -26,6 +26,11 @@ const TYPE_LABELS = {
   mob: "Monster",
   map: "Map",
   npc: "NPC",
+  quest: "Quest",
+  skill: "Skill",
+  set: "Set",
+  article: "Guide",
+  page: "Page",
 };
 
 const SLUG_RE = /^[a-z0-9][a-z0-9_-]{0,119}$/i;

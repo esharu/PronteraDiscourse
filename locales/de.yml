@@ -1,3 +1,11 @@
 de:
   theme_metadata:
     description: "Prontera-Marken-Skin fürs Community-Forum — dark-first Dual-Farbschema, Cinzel/Inter-Typografie, Netzwerk-Switcher im Header, Klaro-Cookie-Consent mit consent-gebundenem GA4 und die Design-Sprache des Whitelabel-Hubs."
+  composer:
+    insert_db: "Aus der Datenbank einfügen"
+  insert_db:
+    title: "Aus der Datenbank einfügen"
+    placeholder: "Items, Monster, Maps, NPCs suchen …"
+    hint: "Mindestens zwei Buchstaben. Enter fügt den ersten Treffer ein."
+    empty: "Nichts gefunden."
+    unavailable: "Die Datenbanksuche ist gerade nicht erreichbar."
