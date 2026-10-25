@@ -1,3 +1,11 @@
 en:
   theme_metadata:
     description: "Prontera brand skin for the community forum — dark-first dual color scheme, Cinzel/Inter typography, the hub network switcher in the header, Klaro cookie consent with consent-gated GA4, and the whitelabel hub design vocabulary."
+  composer:
+    insert_db: "Insert from the database"
+  insert_db:
+    title: "Insert from the database"
+    placeholder: "Search items, monsters, maps, NPCs…"
+    hint: "Type at least two letters. Enter inserts the first result."
+    empty: "Nothing found."
+    unavailable: "The database search is not reachable right now."

@@ -74,6 +74,10 @@ titles or list rows, which stay in **Inter** for readability.
   such a page — e.g. the context post the hub writes when it opens a
   discussion topic — becomes a database card. Data from the hub's public
   `/api/portal/entity`; without it the post stays exactly as rendered.
+- **Insert from the database** — a composer toolbar button opens a search
+  over the hub of the current game (`/api/portal/search`, switchable
+  RO3 / Ragnarok Zero) and inserts the pick as a link to its hub page, which
+  then renders as a chip.
 - **Hub typography** — topic titles in ink (unread) / dim (read), text tokens
   taken from the hub's `tokens.css`.
 - **Umami** — self-hosted analytics + recorder as an opt-in Klaro service.
