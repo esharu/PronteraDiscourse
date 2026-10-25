@@ -1,16 +1,25 @@
 import Component from "@glimmer/component";
 import { service } from "@ember/service";
-import { contextGame, gameInfo } from "../lib/prontera-game";
+import { gameInfo, pageGame } from "../lib/prontera-game";
 
-// The hub's Community sub-navigation under the header (outlet
-// `below-site-header`): Overview · Forum · Guilds · Raids & Parties ·
-// Marketplace. "Forum" is this site and always active here; the rest live
-// on the hub. Marketplace follows the hub's feature flag.
+// The hub's Community sub-navigation at the top of the content column
+// (outlet `above-main-container`): Overview · Forum · Guilds · Raids &
+// Parties · Marketplace. "Forum" is this site and always active; the rest
+// live on the hub. Marketplace follows the hub's feature flag.
+//
+// Only on pages that belong to a game — the homepage and network-wide
+// categories have no single hub to point at. In the content column rather
+// than under the header so it never adds height to the sticky header stack
+// the sidebar is positioned against.
 export default class PronteraCommunityNav extends Component {
   @service router;
 
+  get game() {
+    return pageGame(this.router);
+  }
+
   get items() {
-    const hub = gameInfo(contextGame(this.router));
+    const hub = gameInfo(this.game);
     const items = [
       { label: "Overview", href: `${hub.hubUrl}/community` },
       { label: "Forum", href: hub.forumPath, active: true },
@@ -24,6 +33,7 @@ export default class PronteraCommunityNav extends Component {
   }
 
   <template>
+    {{#if this.game}}
     <div class="prontera-subnav">
       <nav class="prontera-subnav__inner" aria-label="Community">
         {{#each this.items as |item|}}
@@ -35,5 +45,6 @@ export default class PronteraCommunityNav extends Component {
         {{/each}}
       </nav>
     </div>
+    {{/if}}
   </template>
 }
