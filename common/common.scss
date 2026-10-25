@@ -565,6 +565,184 @@ blockquote {
   }
 }
 
+/* ---------------------------------------------------------- database links */
+/* Hub entity links in posts (api-initializers/prontera-db-links.js):
+   typed chips with a hovercard, and oneboxes turned into database cards.
+   Type colours as in the design: item verdigris, monster red, map blue,
+   NPC purple. */
+
+.prontera-chip,
+.prontera-chip:visited {
+  --chip-bg: #22403f;
+  --chip-fg: #8fd0c4;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 8px 0 6px;
+  border-radius: 6px;
+  background: var(--chip-bg);
+  color: var(--chip-fg);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.prontera-chip:hover {
+  color: var(--p-parchment);
+  text-decoration: none;
+}
+.prontera-chip[data-type="mob"] {
+  --chip-bg: #3f2a2f;
+  --chip-fg: #e8908a;
+}
+.prontera-chip[data-type="map"] {
+  --chip-bg: #22344d;
+  --chip-fg: #8fbbe8;
+}
+.prontera-chip[data-type="npc"] {
+  --chip-bg: #3a2f4a;
+  --chip-fg: #c3b2f0;
+}
+.prontera-chip__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--p-radius-full);
+  background: currentColor;
+  flex: none;
+}
+
+.prontera-hovercard {
+  position: absolute;
+  z-index: 1300;
+  width: 300px;
+  max-width: calc(100vw - 16px);
+  padding: 12px 14px;
+  border-radius: var(--p-radius-lg);
+  background: var(--p-card-2);
+  border: 1px solid var(--p-line);
+  box-shadow: 0 22px 50px rgba(8, 16, 26, 0.48);
+  color: var(--p-parchment);
+  font-size: 13px;
+  pointer-events: none;
+}
+.prontera-hovercard__head {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.prontera-hovercard__art,
+.prontera-dbcard__art {
+  flex: none;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #16232f;
+  border: 1px solid var(--p-line);
+}
+.prontera-hovercard__art {
+  width: 40px;
+  height: 40px;
+  border-radius: 9px;
+}
+.prontera-hovercard__art img,
+.prontera-dbcard__art img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.prontera-hovercard__text,
+.prontera-dbcard__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.prontera-hovercard__kicker,
+.prontera-dbcard__kicker {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--p-accent-light);
+}
+.prontera-hovercard__name {
+  font-weight: 700;
+  font-size: 14px;
+}
+.prontera-hovercard__line {
+  display: block;
+  color: var(--p-dim);
+  font-size: 12px;
+}
+
+.prontera-dbcard {
+  position: relative;
+  margin: 0.5em 0 1em;
+  border: 1px solid var(--p-line);
+  border-radius: 18px;
+  background: var(--p-card);
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(8, 16, 26, 0.34), inset 0 1px 0 rgba(244, 234, 210, 0.08);
+}
+.prontera-dbcard::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--p-accent), var(--p-accent-light));
+}
+.prontera-dbcard__body {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 18px 20px;
+}
+.prontera-dbcard__art {
+  width: 64px;
+  height: 64px;
+  border-radius: 13px;
+}
+.prontera-dbcard__name {
+  font: 700 20px var(--font-display);
+  letter-spacing: 1px;
+  color: var(--p-parchment);
+}
+.prontera-dbcard__lines {
+  margin-top: 2px;
+  color: var(--p-dim);
+  font-size: 13px;
+}
+.prontera-dbcard__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  border-top: 1px solid var(--p-line);
+  background: #1a2938;
+}
+.prontera-dbcard__btn,
+.prontera-dbcard__btn:visited {
+  padding: 6px 12px;
+  border-radius: var(--p-radius-full);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.prontera-dbcard__btn.--primary,
+.prontera-dbcard__btn.--primary:visited {
+  background: var(--p-verdigris);
+  color: #ffffff;
+}
+.prontera-dbcard__btn:hover {
+  text-decoration: none;
+  filter: brightness(1.1);
+}
+.prontera-dbcard__note {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--p-faint);
+}
+
 /* ----------------------------------------------------------- Klaro theming */
 
 .klaro {

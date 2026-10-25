@@ -69,6 +69,11 @@ titles or list rows, which stay in **Inter** for readability.
   Guilds · Raids & Parties · Marketplace) under the header. The game of a page
   is read from its root category; inside a game the accent switches to that
   hub's (gold for Ragnarok Zero, banner red for RO3).
+- **Database links in posts** — links to hub entity pages (items, monsters,
+  maps, NPCs on either hub) become typed chips with a hovercard; a onebox of
+  such a page — e.g. the context post the hub writes when it opens a
+  discussion topic — becomes a database card. Data from the hub's public
+  `/api/portal/entity`; without it the post stays exactly as rendered.
 - **Hub typography** — topic titles in ink (unread) / dim (read), text tokens
   taken from the hub's `tokens.css`.
 - **Umami** — self-hosted analytics + recorder as an opt-in Klaro service.
