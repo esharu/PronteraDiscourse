@@ -152,10 +152,23 @@ body::before {
 
 /* --------------------------------------------------------------------- links */
 
+/* In-content links stay verdigris in every game, like the hub's
+   --color-link; the game accent is for active states and kickers only. */
 a,
 .d-header .icon:hover,
 .widget-link:hover {
-  color: var(--p-accent-light);
+  color: var(--p-verdigris-light);
+}
+
+/* Topic titles in the category list's "latest" column are plain links in
+   core — give them the topic-title colours instead of link colour. */
+.category-list .featured-topic a.title,
+.category-list td.latest a.title {
+  color: var(--title-color);
+}
+.category-list .featured-topic a.title:visited,
+.category-list td.latest a.title:visited {
+  color: var(--title-color--read);
 }
 
 /* ------------------------------------------------------------------- buttons */
