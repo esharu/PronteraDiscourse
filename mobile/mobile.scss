@@ -6,7 +6,12 @@
   padding: 2px 8px;
 }
 
-/* Tighten the wordmark so it never overflows the mobile header. */
-html[data-prontera-wordmark="on"] .d-header .title a .site-title {
-  letter-spacing: 0.8px;
+/* Tighten the brand lockup so it never overflows the mobile header. */
+.prontera-brand__name {
+  font-size: 14px;
+  letter-spacing: 1.6px;
+}
+.prontera-brand__emblem {
+  width: 26px;
+  height: 30px;
 }
