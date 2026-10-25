@@ -10,7 +10,7 @@ import { pageGame } from "../lib/prontera-game";
 //  - `above-site-header`: network bar (game switch + hub link)
 //  - `home-logo` (wrapper): Prontera brand lockup with the page's game
 //  - `home-logo__after`: the hub's main navigation
-//  - `below-site-header`: the hub's Community sub-navigation
+//  - `above-main-container`: the hub's Community sub-navigation (game pages)
 //
 // All of these are Glimmer components in plugin outlets — no DOM
 // injection, so header rewrites in core cannot silently break them.
@@ -27,7 +27,7 @@ export default apiInitializer("1.14.0", (api) => {
 
   if (settings.hub_nav_enabled) {
     api.renderInOutlet("home-logo__after", PronteraHubNav);
-    api.renderInOutlet("below-site-header", PronteraCommunityNav);
+    api.renderInOutlet("above-main-container", PronteraCommunityNav);
   }
 
   // Game-scoped accent: inside RO Zero Global the shell turns gold, inside

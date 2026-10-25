@@ -358,10 +358,8 @@ blockquote {
   position: relative;
   z-index: 2;
 }
+/* Shares core's .wrap (width + gutters) so it lines up with the header. */
 .prontera-netbar__inner {
-  max-width: var(--d-max-width, 1110px);
-  margin: 0 auto;
-  padding: 0 10px;
   min-height: 34px;
   display: flex;
   align-items: center;
@@ -451,6 +449,14 @@ blockquote {
 }
 
 /* --- hub navigation (home-logo__after) --- */
+/* The logo outlet wrapper is a block by default, which stacked the nav
+   under the brand and doubled the header height. */
+.d-header .home-logo-wrapper-outlet {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+}
 .prontera-hubnav {
   display: flex;
   gap: 2px;
@@ -517,12 +523,9 @@ blockquote {
 /* --- community sub-navigation (below-site-header) --- */
 .prontera-subnav {
   border-bottom: 1px solid #263a4d;
-  background: var(--secondary);
+  margin-bottom: 1em;
 }
 .prontera-subnav__inner {
-  max-width: var(--d-max-width, 1110px);
-  margin: 0 auto;
-  padding: 0 10px;
   display: flex;
   gap: 4px;
   overflow-x: auto;

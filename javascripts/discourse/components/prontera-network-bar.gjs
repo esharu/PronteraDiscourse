@@ -26,7 +26,7 @@ export default class PronteraNetworkBar extends Component {
 
   <template>
     <div class="prontera-netbar">
-      <div class="prontera-netbar__inner">
+      <div class="wrap prontera-netbar__inner">
         <span class="prontera-netbar__name">PRONTERA.INFO</span>
         <nav class="prontera-netbar__games" aria-label="Games">
           {{#each this.games as |g|}}
