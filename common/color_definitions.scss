@@ -1,0 +1,58 @@
+// Compiled once per colour scheme (Discourse theme field
+// "color_definitions"), so it can react to the scheme in use.
+//
+// Core derives the primary scale (--primary-50 … 900, --primary-low …
+// very-high) and the tokens built on it from the scheme's base colours.
+// With the warm parchment ink of "Prontera Dark" that derivation keeps the
+// hue's chroma and lands on gold: descriptions, meta text, sidebar links and
+// borders all came out gold. Pin the scale to a plain blend of parchment
+// (#f4ead2) over midnight bg (#16232f), the way the hub mixes its text
+// tokens (esharu/printera app/assets/css/tokens.css) — dark schemes only;
+// a light scheme keeps core's derivation.
+@if lightness($primary) > lightness($secondary) {
+  :root {
+    --primary-very-low: #212d37;
+    --primary-low: #313b43;
+    --primary-low-mid: #6f7370;
+    --primary-medium: #a6a499;
+    --primary-high: #c8c2b1;
+    --primary-very-high: #ded6c2;
+    --primary-50: #212d37;
+    --primary-100: #2c373f;
+    --primary-200: #424b50;
+    --primary-300: #595f60;
+    --primary-400: #6f7370;
+    --primary-500: #858680;
+    --primary-600: #9b9a91;
+    --primary-700: #b1aea1;
+    --primary-800: #c8c2b1;
+    --primary-900: #ded6c2;
+    --primary-or-primary-low-mid: #6f7370;
+    --metadata-color: #a6a499;
+    --excerpt-color: #c8c2b1;
+    --content-border-color: #313b43;
+    --input-border-color: #424b50;
+    --table-border-color: #313b43;
+    --d-sidebar-link-color: #c8c2b1;
+    --d-sidebar-link-icon-color: #909089;
+    --d-sidebar-highlight-background: #2c373f;
+    --d-sidebar-active-background: #2c373f;
+  }
+
+  // The modernised foundation theme (core upcoming change) reads text,
+  // icon and border colours from design tokens set on <body>, derived the
+  // same way — override them there.
+  body {
+    --token-color-text-default: #f4ead2;
+    --token-color-text-subtle: #c8c2b1;
+    --token-color-text-subtlest: #a6a499;
+    --token-color-icon-default: #c8c2b1;
+    --token-color-icon-subtle: #a6a499;
+    --token-color-icon-subtlest: #858680;
+    --token-color-border-default: #313b43;
+    --token-color-border-input: #424b50;
+    --token-color-surface-hovered: #2c373f;
+    --token-color-surface-pressed: #313b43;
+    --token-color-surface-focused: #424b50;
+  }
+}
