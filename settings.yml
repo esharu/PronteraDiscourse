@@ -48,6 +48,16 @@ ga4_measurement_id:
   default: ""
   description: "Google Analytics 4 measurement ID (e.g. G-XXXXXXXXXX). Loaded via gtag.js, but only after consent. Leave empty to disable analytics entirely. Keep Discourse's built-in GA setting empty so analytics are not loaded ungated."
 
+umami_host:
+  type: string
+  default: "https://umami.imaginic.de"
+  description: "Base URL of the self-hosted Umami instance (script.js and recorder.js are loaded from here). Loaded ONLY after the visitor consents to the Umami service. Leave empty to disable."
+
+umami_website_id:
+  type: string
+  default: "ab0496f4-5d37-435e-bc83-c8db64e22db3"
+  description: "Umami website ID (data-website-id). Leave empty to disable Umami."
+
 privacy_policy_url:
   type: string
   default: "https://prontera.info/privacy"

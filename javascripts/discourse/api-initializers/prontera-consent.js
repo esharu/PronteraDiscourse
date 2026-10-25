@@ -53,6 +53,24 @@ export default apiInitializer("1.14.0", () => {
     });
   };
 
+  // Umami (analytics + session recorder) — invoked by Klaro only once the
+  // "umami" service is granted. Scripts are injected on consent, never earlier.
+  const umamiHost = (settings.umami_host || "").trim().replace(/\/+$/, "");
+  const umamiId = (settings.umami_website_id || "").trim();
+  window.pronteraLoadUmami = function () {
+    if (!umamiHost || !umamiId || window.__pronteraUmamiLoaded) {
+      return;
+    }
+    window.__pronteraUmamiLoaded = true;
+    ["script.js", "recorder.js"].forEach((file) => {
+      const s = document.createElement("script");
+      s.defer = true;
+      s.src = umamiHost + "/" + file;
+      s.setAttribute("data-website-id", umamiId);
+      document.head.appendChild(s);
+    });
+  };
+
   window.klaroConfig = {
     version: 1,
     elementID: "klaro",
@@ -91,6 +109,10 @@ export default apiInitializer("1.14.0", () => {
           title: "Google Analytics 4",
           description: "Anonymized usage statistics (page views, referrers).",
         },
+        umami: {
+          title: "Umami Analytics & session recording",
+          description: "Privacy-friendly usage statistics and anonymized session recordings, self-hosted at umami.imaginic.de.",
+        },
         "discord-widget": {
           title: "Discord widget",
           description: "Loads Discord to show an embedded server widget (only where embedded).",
@@ -125,6 +147,10 @@ export default apiInitializer("1.14.0", () => {
         "google-analytics": {
           title: "Google Analytics 4",
           description: "Anonymisierte Nutzungsstatistik (Seitenaufrufe, Verweise).",
+        },
+        umami: {
+          title: "Umami Statistik & Sitzungsaufzeichnung",
+          description: "Datenschutzfreundliche Nutzungsstatistik und anonymisierte Sitzungsaufzeichnungen, selbst gehostet auf umami.imaginic.de.",
         },
         "discord-widget": {
           title: "Discord-Widget",
@@ -178,6 +204,20 @@ export default apiInitializer("1.14.0", () => {
             window.pronteraLoadGA();
           } else if (gaId) {
             window["ga-disable-" + gaId] = true;
+          }
+        },
+      },
+      // Self-hosted Umami analytics + session recorder — opt-in.
+      {
+        name: "umami",
+        title: "Umami",
+        purposes: ["analytics"],
+        required: false,
+        optOut: false,
+        default: false,
+        callback(consent) {
+          if (consent) {
+            window.pronteraLoadUmami();
           }
         },
       },
