@@ -61,11 +61,17 @@ titles or list rows, which stay in **Inter** for readability.
 
 ## Features
 
-- **Network switcher** — the header logo is replaced by the Prontera brand
-  switcher (emblem + wordmark + dropdown), mirroring the hub headers: hop
-  between the RO3 / ROZ hubs and this board. URLs/labels are settings.
-- **Hero logo** — on the homepage, the brand is enlarged while scrolled to the
-  top and shrinks back on scroll (desktop only).
+- **Network shell** — one navigation across the forum and both hubs, built
+  from Glimmer components in plugin outlets (no DOM injection):
+  a network bar above the header (game switch RO3 / Ragnarok Zero + hub link),
+  the Prontera brand lockup in place of the logo, the hub's main navigation
+  beside it and the hub's *Community* sub-navigation (Overview · Forum ·
+  Guilds · Raids & Parties · Marketplace) under the header. The game of a page
+  is read from its root category; inside a game the accent switches to that
+  hub's (gold for Ragnarok Zero, banner red for RO3).
+- **Hub typography** — topic titles in ink (unread) / dim (read), text tokens
+  taken from the hub's `tokens.css`.
+- **Umami** — self-hosted analytics + recorder as an opt-in Klaro service.
 - **Cookie consent (Klaro!)** — open-source CMP. Analytics load **only** after
   consent; a *Cookie settings* link in the footer re-opens it. Declared
   services: *Essential (Discourse)* and *Discord login* (necessary, always on),
@@ -79,10 +85,11 @@ titles or list rows, which stay in **Inter** for readability.
 
 ## Settings
 
-Interactive accent (Verdigris / Banner Red / Gold), parchment texture, brand
-wordmark, hero-logo enlarge + height, the network switcher (enable, hub URLs,
-labels), cookie consent (enable), **`ga4_measurement_id`** (e.g. `G-XXXX`), and
-the privacy-policy URL.
+Interactive accent (Verdigris / Banner Red / Gold), parchment texture, the
+network shell (network bar and hub navigation on/off, default game, root
+category IDs, hub URLs, labels, marketplace flags), cookie consent (enable),
+**`ga4_measurement_id`** (e.g. `G-XXXX`), Umami host + website ID, and the
+privacy-policy URL.
 
 > **Important:** put your GA4 ID in `ga4_measurement_id` and keep Discourse's
 > built-in Google Analytics setting **empty**, otherwise analytics load

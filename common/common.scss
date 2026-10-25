@@ -51,20 +51,42 @@
   --p-radius-lg: 13px;
   --p-radius-full: 999px;
 
-  /* Interactive accent — default; overridden below per theme setting */
-  --p-accent: var(--p-verdigris);
-  --p-accent-light: var(--p-verdigris-light);
+  /* Interactive accent — from the "accent_color" theme setting (Sass
+     variable, no JS bridge). --p-on-accent is the readable text colour ON
+     the accent: white reads on verdigris/red, not on gold (hub tokens.css). */
+  @if $accent_color == "banner_red" {
+    --p-accent: var(--p-banner-red);
+    --p-accent-light: var(--p-banner-red-light);
+    --p-on-accent: #ffffff;
+  } @else if $accent_color == "gold" {
+    --p-accent: var(--p-gold);
+    --p-accent-light: var(--p-gold-light);
+    --p-on-accent: var(--p-midnight);
+  } @else {
+    --p-accent: var(--p-verdigris);
+    --p-accent-light: var(--p-verdigris-light);
+    --p-on-accent: #ffffff;
+  }
+
+  /* Hub text tokens (esharu/printera app/assets/css/tokens.css). */
+  --p-dim: #c9bfa8;
+  --p-faint: #94a2b8;
+  --p-line: #31465c;
+  --p-card: #1d2d3f;
+  --p-card-2: #243748;
 }
 
-/* Accent is selected via the "accent_color" theme setting (bridged in
-   head_tag.html onto [data-prontera-accent]). */
-:root[data-prontera-accent="banner_red"] {
-  --p-accent: var(--p-banner-red);
-  --p-accent-light: var(--p-banner-red-light);
-}
-:root[data-prontera-accent="gold"] {
+/* Inside a game's categories the shell takes that hub's accent, set by the
+   network shell (api-initializers/prontera-header.js). */
+:root[data-prontera-game="roz"] {
   --p-accent: var(--p-gold);
   --p-accent-light: var(--p-gold-light);
+  --p-on-accent: var(--p-midnight);
+}
+:root[data-prontera-game="ro3"] {
+  --p-accent: var(--p-banner-red);
+  --p-accent-light: var(--p-banner-red-light);
+  --p-on-accent: #ffffff;
 }
 
 /* ---------------------------------------------------------------- typography */
@@ -75,15 +97,6 @@ html {
 
 body {
   font-family: var(--font-ui);
-}
-
-/* Brand wordmark in the header — the one place Cinzel is welcome.
-   Gated on the "brand_wordmark" setting. */
-html[data-prontera-wordmark="on"] .d-header #site-text-logo,
-html[data-prontera-wordmark="on"] .d-header .title a .site-title {
-  font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: 1.5px;
 }
 
 /* Static-page / hero headings (about, FAQ, topic-less pages). */
@@ -131,8 +144,10 @@ body::before {
   background: var(--p-texture);
 }
 /* Toggle via the "parchment_texture" setting. */
-html[data-prontera-texture="off"] body::before {
-  display: none;
+@if not $parchment_texture {
+  body::before {
+    display: none;
+  }
 }
 
 /* --------------------------------------------------------------------- links */
@@ -300,202 +315,237 @@ blockquote {
   color: var(--primary-high);
 }
 
-/* ----------------------------------------------------------- network switcher */
+/* ------------------------------------------------------------ network shell */
+/* One navigation across forum and hubs (api-initializers/prontera-header.js).
+   Mirrors app/components/app/Header.vue + TabBar breakpoints in the hub. */
 
-/* Hide Discourse's stock logo when our switcher is mounted. */
-html.prontera-switcher-on .d-header .home-logo,
-html.prontera-switcher-on .d-header .title {
-  display: none;
+/* Topic titles read like the hub's lists: ink when unread, dim when read.
+   Core derives --title-color--read from the scheme and it came out gold. */
+:root {
+  --title-color--read: var(--p-dim);
 }
 
-.prontera-switcher {
-  position: relative;
+.btn.btn-primary,
+.btn.btn-primary .d-icon {
+  color: var(--p-on-accent);
+}
+
+/* Seal badge (3 / Z), shared by the network bar. */
+.prontera-seal {
   flex: none;
+  width: 17px;
+  height: 17px;
+  border-radius: var(--p-radius-full);
+  display: inline-grid;
+  place-items: center;
+  font: 700 10px var(--font-display);
+  line-height: 1;
+}
+.prontera-seal[data-game="ro3"] {
+  background: var(--p-banner-red);
+  color: #ffffff;
+}
+.prontera-seal[data-game="roz"] {
+  background: var(--p-gold);
+  color: var(--p-midnight);
+}
+
+/* --- network bar (above-site-header) --- */
+.prontera-netbar {
+  background: #111c26;
+  border-bottom: 1px solid #263a4d;
+  font-size: 11px;
+  position: relative;
+  z-index: 2;
+}
+.prontera-netbar__inner {
+  max-width: var(--d-max-width, 1110px);
+  margin: 0 auto;
+  padding: 0 10px;
+  min-height: 34px;
   display: flex;
   align-items: center;
+  gap: 14px;
+}
+.prontera-netbar__name {
+  font-weight: 700;
+  letter-spacing: 2.6px;
+  color: var(--p-faint);
+}
+.prontera-netbar__games {
+  display: flex;
+  gap: 2px;
+}
+.prontera-netbar__game {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px 4px 5px;
+  border-radius: var(--p-radius-full);
+  color: var(--p-dim);
+  font-weight: 600;
+}
+.prontera-netbar__game:visited {
+  color: var(--p-dim);
+}
+.prontera-netbar__game:hover {
+  color: var(--p-parchment);
+  background: rgba(244, 234, 210, 0.05);
+  text-decoration: none;
+}
+.prontera-netbar__game.--active[data-game="roz"] {
+  color: var(--p-gold-light);
+  background: rgba(217, 164, 65, 0.14);
+}
+.prontera-netbar__game.--active[data-game="ro3"] {
+  color: var(--p-banner-red-light);
+  background: rgba(196, 69, 60, 0.16);
+}
+.prontera-netbar__spacer {
+  flex: 1 1 auto;
+}
+.prontera-netbar__hub,
+.prontera-netbar__hub:visited {
+  color: var(--p-verdigris-light);
+  font-weight: 600;
 }
 
-.prontera-switcher__trigger {
+/* --- brand (home-logo wrapper) --- */
+.prontera-brand,
+.prontera-brand:visited {
   display: flex;
   align-items: center;
   gap: 9px;
-  background: none;
-  border: 0;
-  padding: 4px 6px;
-  border-radius: 10px;
-  cursor: pointer;
   color: var(--header_primary);
+  text-decoration: none;
 }
-.prontera-switcher__trigger:hover {
-  background: rgba(255, 255, 255, 0.08);
+.prontera-brand:hover {
+  text-decoration: none;
 }
-
-.prontera-switcher__emblem {
+.prontera-brand__emblem {
   flex: none;
   width: 30px;
   height: 34px;
-  display: block;
-  transition: width 0.2s ease, height 0.2s ease;
 }
-
-.prontera-switcher__wordmark {
+.prontera-brand__wordmark {
   display: flex;
   flex-direction: column;
-  line-height: 1.15;
-  text-align: left;
+  line-height: 1.12;
 }
-.prontera-switcher__name {
-  font-family: var(--font-display);
-  font-weight: 700;
+.prontera-brand__name {
+  font: 700 16px var(--font-display);
   letter-spacing: 2.5px;
-  font-size: 16px;
   color: var(--header_primary);
-  transition: font-size 0.2s ease;
 }
-.prontera-switcher__tld {
-  font-family: var(--font-ui);
-  font-weight: 600;
-  font-size: 11.5px;
+.prontera-brand__tld {
+  font: 600 11.5px var(--font-ui);
   letter-spacing: 0.4px;
   color: var(--p-gold);
-  text-transform: lowercase;
 }
-.prontera-switcher__sub {
+.prontera-brand__sub {
   font-size: 9px;
+  font-weight: 700;
   letter-spacing: 2.4px;
+  text-transform: uppercase;
   color: var(--p-accent-light);
-  font-weight: 700;
-  text-transform: uppercase;
-}
-.prontera-switcher__chev {
-  font-size: 10px;
-  color: var(--header_primary);
-  opacity: 0.6;
-  transition: transform 0.15s;
-}
-.prontera-switcher__trigger[aria-expanded="true"] .prontera-switcher__chev {
-  transform: rotate(180deg);
 }
 
-/* Panel lives at <body> level and is positioned as fixed by JS, so no header
-   overflow/transform can clip it. */
-.prontera-switcher__panel {
-  position: fixed;
-  width: min(340px, 92vw);
-  background: var(--secondary);
-  border: 1px solid var(--primary-low);
-  border-top: 3px solid var(--p-accent);
-  border-radius: 12px;
-  padding: 8px;
-  z-index: 1200;
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.34);
-  display: none;
-}
-.prontera-switcher__panel.is-open {
-  display: block;
-}
-
-.prontera-switcher__heading {
-  font: 700 10px var(--font-ui);
-  letter-spacing: 1.8px;
-  color: var(--primary-medium);
-  text-transform: uppercase;
-  margin: 4px 8px 6px;
-}
-.prontera-switcher__row {
+/* --- hub navigation (home-logo__after) --- */
+.prontera-hubnav {
   display: flex;
+  gap: 2px;
   align-items: center;
-  gap: 11px;
-  padding: 9px 8px;
-  border-radius: 9px;
-  color: var(--primary);
-}
-.prontera-switcher__row:hover {
-  background: var(--primary-very-low);
-  text-decoration: none;
-}
-.prontera-switcher__row--active {
-  background: color-mix(in srgb, var(--p-accent) 12%, transparent);
-}
-.prontera-switcher__seal {
-  flex: none;
-  width: 32px;
-  height: 32px;
-  border-radius: var(--p-radius-full);
-  display: grid;
-  place-items: center;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 15px;
-  color: var(--p-parchment);
-}
-.prontera-switcher__seal[data-accent="banner-red"] {
-  background: var(--p-banner-red);
-}
-.prontera-switcher__seal[data-accent="gold"] {
-  background: var(--p-gold);
-}
-.prontera-switcher__ic {
-  flex: none;
-  width: 32px;
-  height: 32px;
-  border-radius: 9px;
-  display: grid;
-  place-items: center;
-  font-size: 16px;
-  background: var(--primary-very-low);
-  border: 1px solid var(--primary-low);
-}
-.prontera-switcher__rowtext {
-  display: flex;
-  flex-direction: column;
+  margin-left: 14px;
   min-width: 0;
-}
-.prontera-switcher__rowtext b {
-  font-size: 13.5px;
-}
-.prontera-switcher__rowsub {
-  font-size: 11px;
-  color: var(--primary-medium);
   overflow: hidden;
-  text-overflow: ellipsis;
+}
+.prontera-hubnav__link,
+.prontera-hubnav__link:visited {
+  position: relative;
+  font: 600 13px var(--font-ui);
+  color: var(--p-dim);
+  padding: 8px 10px;
+  border-radius: var(--p-radius-md);
   white-space: nowrap;
 }
-.prontera-switcher__here {
-  margin-left: auto;
-  flex: none;
-  font: 700 8.5px var(--font-ui);
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-  color: var(--p-accent-light);
-  border: 1px solid color-mix(in srgb, var(--p-accent) 40%, transparent);
-  border-radius: var(--p-radius-full);
-  padding: 2px 7px;
+.prontera-hubnav__link:hover {
+  color: var(--header_primary);
+  background: rgba(244, 234, 210, 0.05);
+  text-decoration: none;
 }
-.prontera-switcher__divider {
-  height: 1px;
-  background: var(--primary-low);
-  margin: 6px 4px;
+.prontera-hubnav__link.--active {
+  color: var(--header_primary);
+  background: color-mix(in srgb, var(--p-accent) 14%, var(--p-card));
+}
+.prontera-hubnav__link.--active::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 3px;
+  height: 2px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, var(--p-accent), var(--p-accent-light));
+}
+@media (max-width: 1100px) {
+  .prontera-hubnav {
+    display: none;
+  }
 }
 
-/* --------------------------------------------------- hero logo (homepage top) */
+/* Accent hairline under the header, as on the hub. */
+.d-header {
+  position: relative;
+}
+.d-header::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 -1px 0;
+  height: 2px;
+  opacity: 0.7;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--p-accent) 22%, transparent) 20%,
+    var(--p-accent) 50%,
+    color-mix(in srgb, var(--p-accent) 22%, transparent) 80%,
+    transparent
+  );
+}
 
-/* Desktop only: enlarge the brand while at the top of the homepage. The header
-   grows with it and the switcher scales up; both transition back on scroll. */
-@media (min-width: 768px) {
-  html.prontera-top .d-header {
-    --prontera-hero-pad: 12px;
-  }
-  html.prontera-top .d-header .contents {
-    padding-block: var(--prontera-hero-pad, 12px);
-    transition: padding 0.2s ease;
-  }
-  html.prontera-top .prontera-switcher__emblem {
-    width: calc(var(--prontera-hero-logo-height, 68px) * 0.88);
-    height: var(--prontera-hero-logo-height, 68px);
-  }
-  html.prontera-top .prontera-switcher__name {
-    font-size: 26px;
+/* --- community sub-navigation (below-site-header) --- */
+.prontera-subnav {
+  border-bottom: 1px solid #263a4d;
+  background: var(--secondary);
+}
+.prontera-subnav__inner {
+  max-width: var(--d-max-width, 1110px);
+  margin: 0 auto;
+  padding: 0 10px;
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+}
+.prontera-subnav__link,
+.prontera-subnav__link:visited {
+  font: 600 13px var(--font-ui);
+  color: var(--p-dim);
+  padding: 12px;
+  white-space: nowrap;
+}
+.prontera-subnav__link:hover {
+  color: var(--primary);
+  text-decoration: none;
+}
+.prontera-subnav__link.--active {
+  color: var(--primary);
+  box-shadow: inset 0 -2px 0 var(--p-accent);
+}
+@media (max-width: 820px) {
+  .prontera-subnav,
+  .prontera-netbar__name {
+    display: none;
   }
 }
 

@@ -22,20 +22,6 @@ brand_wordmark:
   default: true
   description: "Render the site title in the Cinzel display font (brand wordmark). Topic titles always stay in Inter for readability."
 
-# ---- Hero header logo (large on the homepage top, shrinks on scroll) ----
-
-hero_logo_enabled:
-  type: bool
-  default: true
-  description: "On the homepage, enlarge the header logo while the page is scrolled to the top; it shrinks back to the normal size as soon as the user scrolls. Desktop only."
-
-hero_logo_max_height:
-  type: integer
-  default: 68
-  min: 40
-  max: 160
-  description: "Height (px) of the enlarged header logo at the top of the homepage."
-
 # ---- Cookie consent + analytics (GA4) ----
 
 consent_enabled:
@@ -63,54 +49,68 @@ privacy_policy_url:
   default: "https://prontera.info/privacy"
   description: "URL of the privacy policy, linked from the consent banner."
 
-# ---- Network switcher (the brand logo doubles as a hub switcher, like the hubs) ----
+# ---- Network shell (one navigation across forum and hubs) ----
+#
+# The forum is shared by both hubs. Which hub a page belongs to is read from
+# its root category: everything under RO Zero Global is "roz", everything
+# under Ragnarok Online 3 is "ro3". Pages outside both (homepage, Prontera,
+# Staff) fall back to the game the visitor last looked at, else default_game.
 
-network_switcher_enabled:
+network_bar_enabled:
   type: bool
   default: true
-  description: "Replace the header logo with the Prontera brand switcher: emblem + wordmark + a dropdown to hop between the RO3 / ROZ hubs and this board, mirroring the hub headers."
+  description: "Thin network bar above the header: game switch (RO3 / Ragnarok Zero) and a link to the matching hub — the same bar the hubs show."
 
-brand_subline:
-  type: string
-  default: "Community Board"
-  description: "Small uppercase subline under the wordmark in the header switcher."
+hub_nav_enabled:
+  type: bool
+  default: true
+  description: "Show the hub's main navigation (Home, Database, Map, Guides, Tools, Build Planner, Community) beside the logo, plus the Community sub-navigation (Overview, Forum, Guilds, Raids, Marketplace) under the header. Desktop only; phones keep Discourse's own navigation."
 
-network_heading:
-  type: string
-  default: "The Prontera.info Network"
-  description: "Heading shown at the top of the switcher dropdown."
+default_game:
+  type: enum
+  default: roz
+  choices:
+    - roz
+    - ro3
+  description: "Hub the navigation points to on pages that belong to neither game."
+
+roz_root_category_id:
+  type: integer
+  default: 32
+  description: "ID of the top-level RO Zero Global category."
+
+ro3_root_category_id:
+  type: integer
+  default: 8
+  description: "ID of the top-level Ragnarok Online 3 category."
 
 ro3_label:
   type: string
   default: "Ragnarok Online 3"
-  description: "RO3 row label in the switcher."
-ro3_domain:
-  type: string
-  default: "ro3.prontera.info"
-  description: "RO3 row sub-text (shown domain)."
+  description: "RO3 name in the network bar and brand subline."
 ro3_url:
   type: string
   default: "https://ro3.prontera.info"
-  description: "RO3 hub link target."
+  description: "RO3 hub base URL (no trailing slash)."
+ro3_marketplace:
+  type: bool
+  default: false
+  description: "RO3 hub has the marketplace feature on (mirrors the hub's features.marketplace)."
 
 roz_label:
   type: string
-  default: "Ragnarok Online Zero"
-  description: "ROZ row label in the switcher."
-roz_domain:
-  type: string
-  default: "roz.prontera.info"
-  description: "ROZ row sub-text (shown domain)."
+  default: "Ragnarok Zero"
+  description: "ROZ name in the network bar and brand subline. Keep 'Ragnarok Zero' contiguous (hub SEO rule)."
 roz_url:
   type: string
   default: "https://roz.prontera.info"
-  description: "ROZ hub link target."
+  description: "ROZ hub base URL (no trailing slash)."
+roz_marketplace:
+  type: bool
+  default: true
+  description: "ROZ hub has the marketplace feature on (mirrors the hub's features.marketplace)."
 
-board_label:
+board_subline:
   type: string
-  default: "Board & Portal"
-  description: "Label of the board row in the switcher (this forum — marked 'You're here')."
-board_desc:
-  type: string
-  default: "Forum, guides and news for the whole network"
-  description: "Sub-text of the board row in the switcher."
+  default: "Community Board"
+  description: "Brand subline on pages that belong to neither game."
